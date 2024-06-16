@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE scenario SYSTEM "sipp.dtd">
+
+<scenario name="SIPp registrar - UAC">
+
+<send retrans="4000">
+<![CDATA[
+REGISTER sip:[remote_ip];transport=[transport] SIP/2.0
+Via: SIP/2.0/[transport] [local_ip]:[local_port];[branch];rport
+Max-Forwards: 70
+Contact: <sip:[field0]@[local_ip]:[local_port]>;transport=[transport];rinstance=f4fb89662a4f3994;>
+To: <sip:[field0]@[remote_ip]:[remote_port]>
+From: <sip:[field0]@[remote_ip]:[remote_port]>;tag=[call_id]
+Call-ID: [call_id]
+CSeq: 1 REGISTER
+Expires: 3600
+Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE
+User-Agent: SIPp
+Allow-Events: presence, kpml, talk
+Content-Length: 0
+]]>
+</send>
+
+<recv response="401" auth="true">
+</recv>
+
+<send retrans="4000">
+<![CDATA[
+REGISTER sip:[remote_ip];transport=[transport] SIP/2.0
+Via: SIP/2.0/[transport] [local_ip]:[local_port];[branch];rport
+Max-Forwards: 70
+Contact: <sip:[field0]@[local_ip]:[local_port]>;transport=[transport];rinstance=f4fb89662a4f3994;>
+To: <sip:[field0]@[remote_ip]:[remote_port]>
+From: <sip:[field0]@[remote_ip]:[remote_port]>;tag=[call_id]
+Call-ID: [call_id]
+CSeq: 2 REGISTER
+Expires: 3600
+Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE
+User-Agent: SIPp
+[field1]
+Allow-Events: presence, kpml, talk
+Content-Length: 0
+]]>
+</send>
+
+<recv response="403" optional="true">
+</recv>
+
+<recv response="401" optional="true">
+</recv>
+
+<recv response="603" optional="true">
+</recv>
+
+<recv response="503" optional="true">
+</recv>
+
+<recv response="200">
+</recv>
+
+</scenario>
