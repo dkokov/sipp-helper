@@ -38,6 +38,10 @@ https://datatracker.ietf.org/doc/html/rfc3665.html#section-3.2
 
 ***
 
+SIPp normal call scenario - sngrep screen
+
+<br>
+
 ![nc-1-sngrep](./doc/png/nc-1-sngrep.png)
 
 <br>
