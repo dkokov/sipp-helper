@@ -27,7 +27,7 @@ If you would like to test some SIP server,in SIP registrar role,then you can use
 Start this command by CLI:
 
 ``` bash 
-sipp -sf xml/uac/register.xml -inf user.csv -t t1 127.0.0.1:5062 -r 4 -trace_err
+sipp -sf xml/uac/register.xml -inf csv/user.csv -t t1 127.0.0.1:5062 -r 4 -trace_err
 ```
 
 It's screen after sipp starting...

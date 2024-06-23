@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE scenario SYSTEM "sipp.dtd">
+
+<scenario name="UAC outgoing INVITE">
+
+ <send retrans="1500">
+ <![CDATA[
+
+INVITE sip:[service]@[remote_ip]:[remote_port];transport=[transport] SIP/2.0
+Via: SIP/2.0/UDP [local_ip]:[local_port];branch=[branch];rport
+Max-Forwards: 70
+Contact: <sip:[field0]@[local_ip]:[local_port];transport=[transport]>
+To: <sip:[service]@[remote_ip]:[remote_port]>
+From: <sip:[field0]@[remote_ip]:[remote_port];transport=[transport]>;tag=8b26d119
+Call-ID: [call_id]
+CSeq: 1 INVITE
+Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE
+Content-Type: application/sdp
+Supported: replaces, norefersub, extended-refer, timer, sec-agree, outbound, path, X-cisco-serviceuri
+User-Agent: sipp
+Allow-Events: presence, kpml, talk, as-feature-event
+Content-Length: [len]
+
+v=0
+o=Z 0 777073919 IN IP4 [media_ip]
+s=Z
+c=IN IP4 [media_ip]
+t=0 0
+m=audio [media_port] RTP/AVP 106 98
+a=rtpmap:106 opus/48000/2
+a=fmtp:106 minptime=20; useinbandfec=1
+a=rtpmap:98 telephone-event/48000
+a=fmtp:98 0-16
+a=sendrecv
+a=rtcp-mux
+
+ ]]>
+ </send>
+
+<recv response="100"  optional="true">
+</recv> 
+
+ <recv response="407" auth="true" >
+ </recv>
+
+<send >
+<![CDATA[ 
+
+ACK sip:[service]@[remote_ip]:[remote_port];transport=[transport] SIP/2.0
+Via: SIP/2.0/UDP [local_ip]:[local_port];branch=[branch];rport
+Max-Forwards: 70
+To: <sip:[service]@[remote_ip]:[remote_port]>;tag=[peer_tag_param]
+From: <sip:[field0]@[remote_ip]:[remote_port];transport=[transport]>;tag=8b26d119
+Call-ID: [call_id]
+CSeq: 1 ACK
+Content-Length: 0
+
+]]>
+</send>
+
+ <!--
+<recv response="408"  optional="true">
+</recv> 
+ -->
+<send retrans="1500">
+<![CDATA[
+
+INVITE sip:[service]@[remote_ip]:[remote_port];transport=[transport] SIP/2.0
+Via: SIP/2.0/UDP [local_ip]:[local_port];branch=[branch];rport
+Max-Forwards: 70
+Contact: <sip:[field]@[local_ip]:[local_port];transport=[transport]>
+To: <sip:[service]@[remote_ip]:[remote_port]>
+From: <sip:[field0]@[remote_ip]:[remote_port];transport=[transport]>;tag=8b26d119
+Call-ID: [call_id]
+CSeq: 2 INVITE
+Allow: INVITE, ACK, CANCEL, BYE, NOTIFY, REFER, MESSAGE, OPTIONS, INFO, SUBSCRIBE
+Content-Type: application/sdp
+[field1]
+Supported: replaces, norefersub, extended-refer, timer, sec-agree, outbound, path, X-cisco-serviceuri
+User-Agent: sipp
+Allow-Events: presence, kpml, talk, as-feature-event
+Content-Length: [len]
+
+v=0
+o=Z 0 777073919 IN IP4 [media_ip]
+s=Z
+c=IN IP4 [media_ip]
+t=0 0
+m=audio [media_port] RTP/AVP 106 98
+a=rtpmap:106 opus/48000/2
+a=fmtp:106 minptime=20; useinbandfec=1
+a=rtpmap:98 telephone-event/48000
+a=fmtp:98 0-16
+a=sendrecv
+a=rtcp-mux
+
+ ]]>
+</send>
+
+  <recv response="100" optional="true" >
+  </recv>
+
+  <recv response="180" optional="true" >
+  </recv>
+
+  <recv response="183" optional="true" >
+  </recv>
+  
+  <recv response="500" optional="true" >
+  </recv>
+  
+  <recv response="503" optional="true" >
+  </recv>
+  
+  <recv response="200" crlf="true" rrs="true">
+  </recv>
+
+<send  >
+<![CDATA[
+
+ACK sip:[service]@[remote_ip]:[remote_port];transport=[transport] SIP/2.0
+Via: SIP/2.0/UDP [local_ip]:[local_port];branch=[branch];rport
+Max-Forwards: 70
+Contact: <sip:[field0]@[local_ip]:[local_port];transport=[transport]>
+To: <sip:[service]@[remote_ip]:[remote_port]>;tag=[peer_tag_param]
+From: <sip:[field0]@[remote_ip]:[remote_port];transport=[transport]>;tag=8b26d119
+Call-ID: [call_id]
+CSeq: 2 ACK
+User-Agent: sipp
+Content-Length: 0
+
+    ]]>
+</send>
+  
+<pause milliseconds="5000"/>
+
+<send >
+<![CDATA[
+
+BYE sip:[service]@[remote_ip]:[remote_port];transport=[transport] SIP/2.0
+Via: SIP/2.0/[transport] [local_ip]:[local_port];branch=[branch]
+From: "[field0]" <sip:[field0]@[remote_ip]:[remote_port]>;tag=8b26d119
+To: <sip:[service]@[remote_ip]:[remote_port]>;tag=[peer_tag_param]
+[field1]
+Contact: "[field0]" <sip:[field0]@[local_ip]:[local_port]>
+[routes]
+Call-ID: [call_id]
+CSeq: 103 BYE
+Max-Forwards: 70
+User-Agent: sipp
+Content-Length: 0
+
+]]>
+</send>
+
+
+
+  <recv response="200" optional="true" >
+  </recv>
+
+<recv response="486" crlf="true">
+</recv>
+
+<!-- definition of the response time repartition table (unit is ms)   -->
+<ResponseTimeRepartition value="10, 20, 30, 40, 50, 100, 150, 200"/>
+
+<!-- definition of the call length repartition table (unit is ms)     -->
+<CallLengthRepartition value="10, 50, 100, 500, 1000, 5000, 10000"/>
+
+</scenario>
+

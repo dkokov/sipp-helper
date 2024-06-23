@@ -1,11 +1,10 @@
 
 # SIPp helper
 
-The SIPp helper is a collection of SIPp scenarios and scripts designed to assist you in testing SIP platforms and other related components.
+The SIPp helper is a collection of SIPp scenarios,short doc files and scripts designed to assist you in testing SIP platforms and other related components.
 
 * [SIPp registrar](./doc/reg.md)
-* [SIPp incomimg call](./doc/inc_call.md)
-* [SIPp outgoing call](./doc/outg_call.md)
+* [SIPp normal calls](./doc/nc.md)
 
 
 ## <u>SIPp registrar scenario - overview</u>
@@ -27,6 +26,19 @@ SIPp registrar scenario - sngrep screen
 
 If you would like to use sipp in this case -
 [**see more details**](./doc/reg.md)
+
+
+
+## <u>SIPp normal call scenario - overview</u>
+
+[**RFC 3665**]
+
+3.2.  Session Establishment Through Two Proxies
+https://datatracker.ietf.org/doc/html/rfc3665.html#section-3.2
+
+***
+
+![nc-1-sngrep](./doc/png/nc-1-sngrep.png)
 
 <br>
 
