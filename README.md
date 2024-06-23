@@ -42,6 +42,10 @@ https://datatracker.ietf.org/doc/html/rfc3665.html#section-3.2
 
 <br>
 
+If you would like to use sipp in this case -
+[**see more details**](./doc/nc.md)
+
+
 ### <u>Useful links</u>:
 
 https://github.com/SIPp/sipp
